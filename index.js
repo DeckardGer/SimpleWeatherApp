@@ -85,12 +85,14 @@ function getWeather(location) {
                 showingWeather = false;
 
                 // Edge case: If wrong API key is used
-                setTimeout(() => {
-                    searchLoc.disabled = false;
-                    searchLoc.style.cursor = "pointer";
-                    searchSpinner.classList.remove("show-contents");
-                }, 1100);
-                message404.innerHTML = "Uh oh! Invalid API key...";
+                if (json.cod === 401) {
+                    setTimeout(() => {
+                        searchLoc.disabled = false;
+                        searchLoc.style.cursor = "pointer";
+                        searchSpinner.classList.remove("show-contents");
+                    }, 1100);
+                    message404.innerHTML = "Uh oh! Invalid API key...";
+                }
             } else {
                 notFoundBox.classList.remove("show-contents");
                 weatherBox.classList.add("show-contents");
