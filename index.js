@@ -7,6 +7,7 @@ const searchBtn = document.getElementById("search-button");
 
 const container = document.querySelector(".container");
 const notFoundBox = document.querySelector(".not-found");
+const message404 = document.querySelector(".message-404");
 const weatherBox = document.querySelector(".weather-box");
 const weatherDetailsBox = document.querySelector(".weather-details-box");
 
@@ -76,12 +77,20 @@ function getWeather(location) {
     )
         .then((response) => response.json())
         .then((json) => {
-            if (json.cod === "404") {
+            if (json.cod === "404" || json.cod === 401) {
                 notFoundBox.classList.add("show-contents");
                 weatherBox.classList.remove("show-contents");
                 weatherDetailsBox.classList.remove("show-contents-flex");
                 container.style.height = "411px";
                 showingWeather = false;
+
+                // Edge case: If wrong API key is used
+                setTimeout(() => {
+                    searchLoc.disabled = false;
+                    searchLoc.style.cursor = "pointer";
+                    searchSpinner.classList.remove("show-contents");
+                }, 1100);
+                message404.innerHTML = "Uh oh! Invalid API key...";
             } else {
                 notFoundBox.classList.remove("show-contents");
                 weatherBox.classList.add("show-contents");
