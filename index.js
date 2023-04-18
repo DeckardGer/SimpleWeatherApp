@@ -1,4 +1,4 @@
-const API_KEY = process.env.API_KEY;
+const API_KEY = "172f4337b23e8f32a63babc3a0690d73";
 
 const searchLoc = document.getElementById("search-location");
 const searchSpinner = document.querySelector(".location-pin-loader");
