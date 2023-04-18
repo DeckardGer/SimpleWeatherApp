@@ -23,6 +23,7 @@ window.onload = () => {
 };
 
 var showingWeather = false;
+var usedLocation = false;
 
 // The user can use their current location using the geolocation
 // function to find their city and country code which gets sent
@@ -40,6 +41,7 @@ searchLoc.addEventListener("click", () => {
                 .then((json) => `${json.city}, ${json.countryCode}`)
                 .then((location) => {
                     searchInput.value = location;
+                    usedLocation = true;
                     getWeather(location);
                 })
                 .catch((e) => {
@@ -164,20 +166,24 @@ function getWeather(location) {
                 humidity.innerHTML = `${json.main.humidity}%`;
                 clouds.innerHTML = `${parseInt(json.wind.speed)}Km/h`;
 
-                if (showingWeather) {
-                    toggleSpinner();
-                } else {
-                    setTimeout(() => {
+                if (usedLocation) {
+                    if (showingWeather) {
                         toggleSpinner();
-                    }, 1100);
+                    } else {
+                        setTimeout(() => {
+                            toggleSpinner();
+                        }, 1100);
+                    }
                 }
 
                 showingWeather = true;
+                usedLocation = false;
             }
         })
         .catch((e) => {
             console.log(e);
             toggleSpinner();
+            usedLocation = false;
         });
 }
 
