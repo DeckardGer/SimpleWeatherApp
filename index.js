@@ -1,4 +1,4 @@
-import { API_KEY } from "./config.js";
+const API_KEY = "YOUR API KEY HERE";
 
 const searchLoc = document.getElementById("search-location");
 const searchSpinner = document.querySelector(".location-pin-loader");
